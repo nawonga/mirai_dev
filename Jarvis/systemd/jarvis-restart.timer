@@ -1,0 +1,15 @@
+[Unit]
+Description=Mirai Space — Jarvis 일일 자동 재시작 타이머 (매일 03:00 KST)
+Documentation=https://github.com/nawonga/mirai_dev
+
+[Timer]
+# 매일 03:00 KST — 사용자 활동 시간대 (~07:00~24:00) 회피.
+OnCalendar=*-*-* 03:00:00
+# 라파가 03:00 에 꺼져있었으면 부팅 후 즉시 1회 보충 실행 (놓친 fire 복구).
+Persistent=true
+# 정확한 03:00 동시 fire 회피 — 시계 노이즈 흡수용 1분 jitter.
+RandomizedDelaySec=60s
+Unit=jarvis-restart.service
+
+[Install]
+WantedBy=timers.target

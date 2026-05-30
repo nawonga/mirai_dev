@@ -1,0 +1,12 @@
+[Unit]
+Description=Mirai Space — Jarvis 일일 자동 재시작 (마이크 stream stale 방지)
+Documentation=https://github.com/nawonga/mirai_dev
+
+# jarvis.service 가 활성 상태일 때만 의미 있음. 비활성이면 noop.
+ConditionPathExists=/home/nawonga/.config/systemd/user/jarvis.service
+
+[Service]
+Type=oneshot
+# jarvis.service 를 restart — 장기 idle 시 PvRecorder PulseAudio memfd 가
+# (deleted) 상태로 남아 향단아 인식이 멈추던 현상 (2026-05-30 진단) 회피.
+ExecStart=/usr/bin/systemctl --user restart jarvis.service
