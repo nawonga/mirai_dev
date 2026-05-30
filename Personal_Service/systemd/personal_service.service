@@ -1,0 +1,31 @@
+[Unit]
+Description=Mirai Space — Personal_Service (시간/날씨/리마인더 도메인)
+Documentation=file:///home/nawonga/MiraiProject/dev/Personal_Service/OPERATING.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nawonga
+Group=nawonga
+WorkingDirectory=/home/nawonga/MiraiProject/dev/Personal_Service
+EnvironmentFile=/home/nawonga/MiraiProject/dev/Personal_Service/.env
+Environment=PYTHONPATH=src
+ExecStart=/home/nawonga/MiraiProject/dev/Personal_Service/venv/bin/uvicorn personal_service.main:app --host 0.0.0.0 --port 8100 --no-access-log
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=personal_service
+
+# 약한 sandbox — 캐시 파일은 storage/ 에만 쓰면 됨
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+# storage/ 경로는 쓰기 허용
+ReadWritePaths=/home/nawonga/MiraiProject/dev/Personal_Service/storage
+
+[Install]
+WantedBy=multi-user.target

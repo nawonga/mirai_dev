@@ -1,0 +1,66 @@
+# Mirai Space — dev monorepo .gitignore
+# 보안: .env 파일에 SmartThings/Picovoice/Gemini/KMA/Jarvis API 토큰이 있으므로 절대 commit 금지
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# === Virtual environments (각 모듈) ===
+venv/
+.venv/
+env/
+ENV/
+
+# === Secrets ===
+.env
+.env.local
+*.pem
+*.key
+
+# === Local data / runtime ===
+# SQLite DB (각 모듈)
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+storage/*.db
+storage/*.sqlite
+
+# Jarvis TTS 캐시 + welcome wav + 모델 (런타임 산출물, 재생성 가능)
+Jarvis/data/tts_cache/
+Jarvis/data/welcome.wav
+Jarvis/data/models/
+
+# Aqua-DCS 런타임 DB / 백업 / 리포트
+Aqua-DCS/data/*.db
+Aqua-DCS/reports/*.png
+Aqua-DCS/reports/*.svg
+Aqua-DCS/reports/*.csv
+
+# === Logs ===
+*.log
+logs/
+
+# === 작업 전 임시 백업 디렉토리 ===
+Aqua-DCS.local-pre-clone/
+*.bak/
+*.local-pre-clone/
+
+# === OS / editor ===
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+.cursor/
+
+# === Build artifacts ===
+build/
+dist/
+*.tar.gz

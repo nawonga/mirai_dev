@@ -1,0 +1,29 @@
+[Unit]
+Description=Mirai Space — Jarvis (Wakeword + STT + TTS interface)
+Documentation=file:///home/nawonga/MiraiProject/dev/Jarvis/ARCHITECTURE.md
+# PipeWire 사용자 세션 준비 후 시작. (Mirai_brain 은 system scope 라 직접 After= 불가
+# — Jarvis 가 HTTP 호출 시 graceful retry/fallback 으로 처리)
+After=pipewire.service pipewire-pulse.service wireplumber.service
+Wants=pipewire.service wireplumber.service
+# 하드 크래시 재시작 루프 방지: 60초 내 5회 실패 시 정지
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+[Service]
+Type=simple
+WorkingDirectory=/home/nawonga/MiraiProject/dev/Jarvis
+EnvironmentFile=/home/nawonga/MiraiProject/dev/Jarvis/.env
+Environment=PYTHONPATH=src
+Environment=PYTHONUNBUFFERED=1
+# 인자 없이 무한 루프 (wakeword → STT → intent → TTS, system.stop 도 systemd 가 Restart=always 로 다시 살림)
+ExecStart=/home/nawonga/MiraiProject/dev/Jarvis/venv/bin/python -m jarvis.main
+# 음성 "그만" 으로 종료 못 하게 — 진짜 끄려면 systemctl --user stop jarvis.service
+Restart=always
+RestartSec=8
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=jarvis
+
+[Install]
+WantedBy=default.target

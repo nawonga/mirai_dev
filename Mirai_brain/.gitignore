@@ -1,0 +1,12 @@
+# 시크릿/환경
+.env
+*.key
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# 영속 저장소 (audit log 등)
+storage/*.db
+storage/*.sqlite*

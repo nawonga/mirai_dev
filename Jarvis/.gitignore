@@ -1,0 +1,14 @@
+# 자격증명/시크릿 (절대 커밋 금지)
+google-key-new.json
+*.json.key
+.env
+
+# Python venv / 캐시
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# 실데이터 (모델/로그/캐시/DB)
+data/
+*.wav

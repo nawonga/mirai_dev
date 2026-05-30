@@ -1,0 +1,53 @@
+{
+  "controllers": {
+    "mock_1": {
+      "type": "mock"
+    },
+    "broadlink_rm4_pro_1": {
+      "type": "broadlink",
+      "host": "192.168.0.242",
+      "mac": "34:8E:89:2E:20:19",
+      "devtype": 21003,
+      "note": "과거 확인된 RM4 Pro. 현재 LAN 미연결 — 연결 시 device protocol을 'ir'로 전환."
+    }
+  },
+  "devices": {
+    "tv": {
+      "display_name": "거실 TV",
+      "protocol": "mock",
+      "controller_id": "mock_1",
+      "zone": "living_room",
+      "aliases": ["티비", "TV", "텔레비전", "거실 티비"],
+      "actions": {
+        "power": {},
+        "volume_up": {},
+        "volume_down": {},
+        "mute": {}
+      }
+    },
+    "living_room_light": {
+      "display_name": "거실 조명",
+      "protocol": "mock",
+      "controller_id": "mock_1",
+      "zone": "living_room",
+      "aliases": ["거실등", "거실 조명", "거실 불"],
+      "actions": {
+        "power": {},
+        "power_on": {},
+        "power_off": {}
+      }
+    },
+    "aircon": {
+      "display_name": "에어컨",
+      "protocol": "mock",
+      "controller_id": "mock_1",
+      "zone": "living_room",
+      "aliases": ["에어컨", "ac"],
+      "actions": {
+        "power": {},
+        "temp_up": {},
+        "temp_down": {}
+      }
+    }
+  }
+}

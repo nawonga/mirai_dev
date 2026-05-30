@@ -1,0 +1,10 @@
+# Aqua-DCS 의존성 (운영 최소셋)
+# 표준 라이브러리만 쓰는 부분: sqlite3, pathlib, dataclasses, json, time, os, typing, collections
+# 하드웨어 드라이버: DS18B20 = sysfs (/sys/bus/w1/devices) — 의존성 없음
+
+flask>=3.0,<4
+
+# 추후 드라이버 구현 시 추가 후보 (현재 stub):
+#   adafruit-circuitpython-ads1x15   # ADS1115 (i2c ADC: pH, EC)
+#   RPi.GPIO                          # 조명/액추에이터 GPIO
+#   smbus2                            # 일반 i2c

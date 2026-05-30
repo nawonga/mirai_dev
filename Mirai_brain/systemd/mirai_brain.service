@@ -1,0 +1,29 @@
+[Unit]
+Description=Mirai Space — Mirai_brain (중앙 의미 해석 + 도메인 오케스트레이션)
+Documentation=file:///home/nawonga/MiraiProject/dev/Mirai_brain/OPERATING.md
+After=network-online.target personal_service.service home_iot.service
+Wants=network-online.target personal_service.service home_iot.service
+
+[Service]
+Type=simple
+User=nawonga
+Group=nawonga
+WorkingDirectory=/home/nawonga/MiraiProject/dev/Mirai_brain
+EnvironmentFile=/home/nawonga/MiraiProject/dev/Mirai_brain/.env
+Environment=PYTHONPATH=src
+ExecStart=/home/nawonga/MiraiProject/dev/Mirai_brain/venv/bin/uvicorn mirai_brain.main:app --host 0.0.0.0 --port 8200 --no-access-log
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mirai_brain
+
+# 약한 sandbox — 외부 호출만 하므로 쓰기 디렉토리 없음
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target

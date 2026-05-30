@@ -1,0 +1,33 @@
+# Home_IOT — Zigbee 스택 (Mosquitto + Zigbee2MQTT)
+# 설계 근거: docs/zigbee_setup_2026-05-08.md
+# 기동: cd /home/nawonga/MiraiProject/dev/Home_IOT && docker compose up -d
+# ${ZIGBEE_PORT}는 같은 디렉토리의 .env 에서 읽는다(동글 by-id 경로).
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: homeiot-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./zigbee/mosquitto/config:/mosquitto/config
+      - ./zigbee/mosquitto/data:/mosquitto/data
+      - ./zigbee/mosquitto/log:/mosquitto/log
+
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: homeiot-zigbee2mqtt
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "8080:8080"          # 웹 프론트엔드
+    volumes:
+      - ./zigbee/zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro
+    devices:
+      # 호스트 동글(by-id, .env의 ZIGBEE_PORT) → 컨테이너 /dev/zigbee
+      - "${ZIGBEE_PORT}:/dev/zigbee"
+    environment:
+      - TZ=Asia/Seoul

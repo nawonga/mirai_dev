@@ -1,0 +1,32 @@
+[Unit]
+Description=Mirai Space — Aqua-DCS Web (Flask 대시보드 / API)
+Documentation=file:///home/nawonga/MiraiProject/dev/Aqua-DCS/OPERATING_RULES.md
+After=network-online.target aqua-dcs-collector.service
+Wants=network-online.target
+# collector 가 죽어도 web 은 계속 서비스 (DB 마지막 값 조회 가능)
+
+[Service]
+Type=simple
+User=nawonga
+Group=nawonga
+WorkingDirectory=/home/nawonga/MiraiProject/dev/Aqua-DCS
+EnvironmentFile=-/home/nawonga/MiraiProject/dev/Aqua-DCS/.env
+Environment=PYTHONPATH=src
+Environment=AQUA_LIVE_JSON=/run/aqua-dcs/latest.json
+ExecStart=/home/nawonga/MiraiProject/dev/Aqua-DCS/venv/bin/python -u -m dcs.web.app
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aqua-dcs-web
+
+# 약한 sandbox — DB read-only로도 충분하나 향후 calibration 등 쓰기 가능성 대비 RW
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/home/nawonga/MiraiProject/dev/Aqua-DCS/data
+
+[Install]
+WantedBy=multi-user.target

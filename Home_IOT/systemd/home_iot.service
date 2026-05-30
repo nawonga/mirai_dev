@@ -1,0 +1,33 @@
+[Unit]
+Description=Mirai Space — Home_IOT (스마트홈 기기 제어 도메인)
+Documentation=file:///home/nawonga/MiraiProject/dev/Home_IOT/OPERATING_RULES.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nawonga
+Group=nawonga
+WorkingDirectory=/home/nawonga/MiraiProject/dev/Home_IOT
+EnvironmentFile=/home/nawonga/MiraiProject/dev/Home_IOT/.env
+Environment=PYTHONPATH=src
+ExecStart=/home/nawonga/MiraiProject/dev/Home_IOT/venv/bin/uvicorn home_iot.api:app --host 0.0.0.0 --port 8300 --no-access-log
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=home_iot
+
+# 약한 sandbox
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+# storage/ (device_registry) + Zigbee 동글 직접 접근(/dev) 필요
+ReadWritePaths=/home/nawonga/MiraiProject/dev/Home_IOT/storage
+# Zigbee 동글 (시리얼 by-id 경로) 읽기 — 미연결 시 무시됨
+SupplementaryGroups=dialout
+
+[Install]
+WantedBy=multi-user.target

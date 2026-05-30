@@ -1,0 +1,38 @@
+# Requirement during development
+
+## Broadlink RM4 Pro integration notes (2026-04-10)
+- Canonical project paths:
+  - Host: `/home/nawonga/Projects/Home_IOT`
+  - OpenClaw mount: `/home/node/work/Home_IOT`
+- Broadlink RM4 Pro local discovery/auth was prioritized first.
+- Confirmed discovered device:
+  - IP: `192.168.0.242`
+  - MAC: `34:8E:89:2E:20:19`
+  - Device type: `rm4pro` (`21003`)
+- Initial local auth failed repeatedly until the device was deleted and re-registered in the Broadlink mobile app.
+- After re-registration, local auth succeeded from Raspberry Pi.
+- Implemented CLI commands:
+  - `discover-rm4`
+  - `auth-rm4`
+  - `learn-ir`
+  - `send-ir`
+  - `learn-preset`
+  - `send-preset`
+  - `control-device`
+- Architecture rule reinforced from top-level OPERATING.md:
+  - OpenClaw is the central orchestrator.
+  - Jarvis may do first-pass classification only.
+  - Final decision to call Home_IOT belongs to OpenClaw.
+- Device registry skeleton added:
+  - `storage/device_registry.json`
+  - registry helper: `src/home_iot/registry.py`
+- Registry-backed control path added:
+  - `python3 -m home_iot.main control-device --device tv --action power`
+  - current implementation resolves active code from registry and sends via Broadlink adapter
+- JSON command path added:
+  - `python3 -m home_iot.main handle-json`
+  - stdin JSON example: `{"operation":"execute_action","device_id":"tv","action":"power"}`
+- `home_iot_bridge.py` now prefers JSON contract to Home_IOT when registry-backed requests are available.
+- IR learned payloads are stored under:
+  - `storage/ir_codes/`
+- Keep weather/Jarvis notes in Jarvis-local markdown files; keep Home_IOT device integration notes in Home_IOT-local markdown files.

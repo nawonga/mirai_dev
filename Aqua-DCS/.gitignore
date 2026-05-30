@@ -1,0 +1,25 @@
+# Aqua-DCS .gitignore
+
+# Database (Large file - Excluded from Git per user request)
+data/*.db
+data/*.sqlite
+
+# Python/Environment
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+env/
+venv/
+ENV/
+
+# Logs
+logs/
+*.log
+
+# Reports/Artifacts
+reports/*.png
+reports/*.svg
+reports/*.csv

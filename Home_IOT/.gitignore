@@ -1,0 +1,17 @@
+# 시크릿/환경
+.env
+google-key*.json
+*.key
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Zigbee/MQTT 런타임 데이터 (네트워크 키·DB·로그 — 민감/가변, 커밋 금지)
+zigbee/zigbee2mqtt/data/
+zigbee/mosquitto/data/
+zigbee/mosquitto/log/
+
+# Home_IOT 런타임 저장소(학습 IR 코드 등) — 레지스트리(device_registry.json)는 추적
+storage/ir_codes/

@@ -1,0 +1,24 @@
+[Unit]
+Description=Mirai Space — Jarvis Text Command API (텍스트 인입 REST)
+Documentation=file:///home/nawonga/MiraiProject/dev/Jarvis/docs/api_contracts/text_command_api.md
+# PipeWire 불필요 (마이크/스피커 안 씀, 텍스트 in/out 만)
+After=network-online.target
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+[Service]
+Type=simple
+WorkingDirectory=/home/nawonga/MiraiProject/dev/Jarvis
+EnvironmentFile=/home/nawonga/MiraiProject/dev/Jarvis/.env
+Environment=PYTHONPATH=src
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/nawonga/MiraiProject/dev/Jarvis/venv/bin/uvicorn jarvis.api:app --host 0.0.0.0 --port 8400 --no-access-log
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=jarvis-api
+
+[Install]
+WantedBy=default.target

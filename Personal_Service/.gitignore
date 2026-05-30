@@ -1,0 +1,14 @@
+# 시크릿/환경
+.env
+*.key
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# 영속 저장소 (가변 데이터: 리마인더 DB, 기상 캐시 등 — 추적 금지)
+storage/*.db
+storage/*.sqlite*
+storage/*.json
+storage/.weather_cache_*

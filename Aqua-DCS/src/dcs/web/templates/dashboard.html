@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aqua DCS Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/uplot.min.css" />
+  </head>
+  <body>
+    <main class="container">
+
+      <!-- ── header ── -->
+      <header>
+        <h1>🐠 Aqua DCS</h1>
+        <div id="status" class="status-badge">연결 중...</div>
+      </header>
+
+      <!-- ── live value cards ── -->
+      <section class="live-cards" id="live-cards"></section>
+
+      <!-- ── chart panel ── -->
+      <section class="chart-panel">
+
+        <!-- sensor selector tabs -->
+        <div class="chart-toolbar">
+          <div class="sensor-tabs" id="sensor-tabs"></div>
+
+          <div class="toolbar-right">
+            <!-- time range -->
+            <span class="label">시간</span>
+            <div class="btn-group" id="time-btns">
+              <button class="btn active" data-minutes="10">10m</button>
+              <button class="btn" data-minutes="30">30m</button>
+              <button class="btn" data-minutes="60">1h</button>
+              <button class="btn" data-minutes="360">6h</button>
+              <button class="btn" data-minutes="1440">24h</button>
+            </div>
+
+            <!-- custom range (from/to) -->
+            <span class="label">구간</span>
+            <div class="range">
+              <input id="from-dt" type="datetime-local" />
+              <span class="label">~</span>
+              <input id="to-dt" type="datetime-local" />
+              <button class="btn" id="apply-range">적용</button>
+              <button class="btn" id="clear-range">해제</button>
+            </div>
+
+            <!-- y-scale (applies to active sensor) -->
+            <span class="label">Y축</span>
+            <div class="btn-group" id="yscale-btns">
+              <button class="btn active" data-yscale="auto">Auto</button>
+              <button class="btn" data-yscale="preset">Preset</button>
+              <button class="btn" data-yscale="zoom+">Zoom+</button>
+              <button class="btn" data-yscale="zoom-">Zoom−</button>
+            </div>
+
+            <!-- offset (applies to active sensor) -->
+            <span class="label">Offset</span>
+            <div class="btn-group" id="offset-btns">
+              <button class="btn" data-offset="down">Lower</button>
+              <button class="btn" data-offset="reset">Reset</button>
+              <button class="btn" data-offset="up">Upper</button>
+            </div>
+
+            <!-- axes view -->
+            <span class="label">축</span>
+            <div class="btn-group" id="axes-btns">
+              <button class="btn active" data-axes="all">All</button>
+              <button class="btn" data-axes="active">Active</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- chart container -->
+        <div id="chart-wrap"></div>
+
+      </section>
+
+      <footer class="footer-status" id="footer-status"></footer>
+    </main>
+
+    <script src="/static/uplot.min.js"></script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
